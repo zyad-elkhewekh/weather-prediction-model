@@ -1,7 +1,6 @@
 from datetime import datetime
 from meteostat import Point, Daily
 import pandas as pd
-import matplotlib.pyplot as plt
 
 cairo1 = Point(30.0444, 31.2357)
 
@@ -13,3 +12,6 @@ data = data.fetch()
 print(data.head())
 print(data.tail())
 data.info()
+
+data.to_csv('weather.csv')
+data.to_pickle('weather.pickle')

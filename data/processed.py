@@ -1,9 +1,21 @@
-from raw import data
+from pandas import read_csv, read_pickle
 
-data.snow = data.snow.fillna(0)
-data.wdir = data.wdir.fillna(0)
-data.prcp = data.prcp.fillna(data.prcp.mean())
-data.wpgt = data.wpgt.fillna(data.wpgt.mean())
-data.tsun = data.tsun.fillna(data.tsun.mean())
+#from raw import data
+#clean = read_csv("weather.csv")
+clean = read_pickle("weather.pickle")
 
-data.isnull().sum()
+print(clean.head())
+
+
+
+clean.snow = clean.snow.fillna(0)
+clean.wdir = clean.wdir.fillna(0)
+clean.prcp = clean.prcp.fillna(clean.prcp.mean())
+clean.wpgt = clean.wpgt.fillna(clean.wpgt.mean())
+clean.tsun = clean.tsun.fillna(clean.tsun.mean())
+
+print(f"after cleaning: ")
+print(clean.isnull().sum())
+print(clean.head())
+
+clean.to_pickle("cleaned-weather.pickle")
