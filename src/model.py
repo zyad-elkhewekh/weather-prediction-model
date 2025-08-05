@@ -5,9 +5,10 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.model_selection import GridSearchCV
+import joblib
 
 data = pd.read_pickle("D:/pycharm--------/Weather-Prediction-Model/data/cleaned-weather.pickle")
-print(data.info())
+#print(data.info())
 
 data['target'] = data['tavg'].shift(-1)
 data.dropna(inplace=True)
@@ -53,3 +54,5 @@ print(f"R² Score: {r2:.2f}")
 print("Best parameters:", grid.best_params_)
 
 #print(data.corr(numeric_only=True)['tavg'].sort_values(ascending=False))
+
+joblib.dump(model, "D:/pycharm--------/Weather-Prediction-Model/models/final_model.pkl")
