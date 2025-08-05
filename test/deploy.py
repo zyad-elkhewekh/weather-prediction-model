@@ -1,3 +1,7 @@
+from src.model import features
 from src.predict import hybrid_predict
 
-print(hybrid_predict("2025-08-06"))
+# print("Features used for prediction:")
+# print(features)
+
+print(hybrid_predict("2024-07-15"))

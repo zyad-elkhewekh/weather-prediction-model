@@ -12,7 +12,12 @@ data = pd.read_pickle("D:/pycharm--------/Weather-Prediction-Model/data/cleaned-
 
 data['target'] = data['tavg'].shift(-1)
 data.dropna(inplace=True)
-features = data.drop(columns=['tavg', 'tmax', 'tmin', 'tavg_lag1', 'target'])
+FEATURES = [
+    'month', 'day', 'tsun', 'wpgt', 'pres', 'prcp',
+    'prcp_lag1', 'wpgt_lag3'
+]
+
+features = data[FEATURES]
 target = data.target
 
 split_date = '2024-01-01'

@@ -12,6 +12,7 @@ def fetch_weather(date: datetime, location: Point) -> pd.DataFrame:
     return Daily(location, date, date).fetch()
 
 def build_features(target_date: str) -> pd.DataFrame | None:
+    from meteostat import Point, Daily
     target_dt = datetime.strptime(target_date, "%Y-%m-%d")
     cairo = Point(30.0444, 31.2357)
 
@@ -21,6 +22,7 @@ def build_features(target_date: str) -> pd.DataFrame | None:
         lag3_data = fetch_weather(target_dt - timedelta(days=4), cairo)
 
         if today_data.empty or lag1_data.empty or lag3_data.empty:
+            print("Missing data on one or more required dates.")
             return None
 
         row = {
@@ -34,9 +36,16 @@ def build_features(target_date: str) -> pd.DataFrame | None:
             'wpgt_lag3': lag3_data['wpgt'].values[0]
         }
 
-        return pd.DataFrame([row])
-    except:
+        df = pd.DataFrame([row])
+
+        df = df.fillna(0)
+
+        return df
+
+    except Exception as e:
+        print(f"[ERROR in build_features]: {e}")
         return None
+
 
 def hybrid_predict(target_date: str) -> str:
     features = build_features(target_date)
